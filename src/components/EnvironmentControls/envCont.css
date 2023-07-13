@@ -1,0 +1,17 @@
+.environment-controls {
+  margin-top: 2rem;
+}
+
+.environment-controls button {
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.environment-controls button.active {
+  background-color: #555;
+}

@@ -1,0 +1,32 @@
+/* Reset default margin and padding */
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply default styles to the app container */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* Apply styles to the main content area */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Apply styles to the footer */
+.footer {
+  background-color: #333;
+  padding: 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+/* Add additional styles as needed for your application */

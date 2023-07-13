@@ -1,0 +1,42 @@
+.gallery-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.artwork-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Styling for individual artwork */
+.artwork {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.artwork-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.artwork-title {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.artwork-artist {
+  margin-top: 0.5rem;
+  color: #777;
+}
