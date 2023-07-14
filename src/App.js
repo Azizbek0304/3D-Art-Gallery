@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
 import Gallery from './components/Gallery';
@@ -12,12 +12,12 @@ export default function App() {
     <Router>
       <div className="app">
         <Header />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/gallery" component={Gallery} />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
-        </Switch>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
       </div>
     </Router>
   );
