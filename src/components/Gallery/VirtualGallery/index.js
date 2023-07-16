@@ -1,16 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { WebGL } from 'three/examples/jsm/addons/capabilities/WebGL.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import './virtualGallery.css';
 
 const VirtualGallery = () => {
   const sceneRef = useRef();
   const rendererRef = useRef();
   const cubeRef = useRef();
+  const controlsRef = useRef();
 
   useEffect(() => {
     if (WebGL.isWebGLAvailable()) {
-      // Create the scene
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
         75,
@@ -21,19 +22,24 @@ const VirtualGallery = () => {
 
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+      rendererRef.current = renderer;
 
-      // Attach the renderer to the DOM
       sceneRef.current.appendChild(renderer.domElement);
 
       const geometry = new THREE.BoxGeometry(1, 1, 1);
       const material = new THREE.MeshBasicMaterial({ color: '#fff' });
       const cube = new THREE.Mesh(geometry, material);
-
+      cubeRef.current = cube;
       scene.add(cube);
 
       camera.position.z = 5;
 
-      // Animation loop
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controlsRef.current = controls;
+      controls.enableRotate = true;
+      controls.enableZoom = true;
+      controls.enablePan = true;
+
       const animate = () => {
         requestAnimationFrame(animate);
 
@@ -41,18 +47,16 @@ const VirtualGallery = () => {
         cube.rotation.y += 0.01;
 
         renderer.render(scene, camera);
+        controls.update();
       };
 
       animate();
 
-      // Clean up
       return () => {
-        // Remove renderer and cube from scene
         scene.remove(cube);
         renderer.dispose();
-
-        // Remove renderer DOM element
         sceneRef.current.removeChild(renderer.domElement);
+        controls.dispose();
       };
     } else {
       const warning = WebGL.getWebGLErrorMessage();
