@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import './virtualGallery.css';
+import modelPath from './your_model.glb'; // Replace with the path to your .glTF model file
 
 const VirtualGallery = () => {
   const sceneRef = useRef();
   const rendererRef = useRef();
   const controlsRef = useRef();
-  const modelRef = useRef(); // Add a reference for the model
+  const modelRef = useRef();
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -18,9 +19,10 @@ const VirtualGallery = () => {
       0.1,
       1000
     );
+    camera.position.set(0, 0, 5);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     rendererRef.current = renderer;
 
     sceneRef.current.appendChild(renderer.domElement);
@@ -31,42 +33,15 @@ const VirtualGallery = () => {
     controls.enableZoom = true;
     controls.enablePan = true;
 
-    scene.background = new THREE.Color('#e5e5e5');
-
-    const groundGeometry = new THREE.PlaneGeometry(10, 10);
-    const groundMaterial = new THREE.MeshPhongMaterial({ color: '#c7c7c7' });
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = -Math.PI / 2;
-    ground.receiveShadow = true;
-    scene.add(ground);
-
     const loader = new GLTFLoader();
-    loader.load('path/to/your/model.glb', (gltf) => {
+    loader.load(modelPath, (gltf) => {
       const model = gltf.scene;
-      model.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-        }
-      });
+      modelRef.current = model;
       scene.add(model);
-      modelRef.current = model; // Save the model reference
     });
-
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(0, 10, 10);
-    light.castShadow = true;
-    light.shadow.mapSize.width = 1024;
-    light.shadow.mapSize.height = 1024;
-    light.shadow.camera.near = 0.1;
-    light.shadow.camera.far = 50;
-    scene.add(light);
-
-    camera.position.z = 5;
 
     const animate = () => {
       requestAnimationFrame(animate);
-
       renderer.render(scene, camera);
       controls.update();
     };
@@ -76,11 +51,11 @@ const VirtualGallery = () => {
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+      renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
     return () => {
-      scene.remove(modelRef.current); // Use the model reference
+      scene.remove(modelRef.current);
       renderer.dispose();
       sceneRef.current.removeChild(renderer.domElement);
       controls.dispose();
