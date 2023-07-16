@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import './virtualGallery.css';
-import modelPath from './Object/ArtGallery.glb'; // Replace with the path to your .glTF model file
+import modelPath from './ArtGallery.glb'; // Replace with the path to your .glTF model file
 
 const VirtualGallery = () => {
   const sceneRef = useRef();
