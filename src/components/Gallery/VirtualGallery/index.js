@@ -10,7 +10,7 @@ const VirtualGallery = () => {
   const rendererRef = useRef();
   const controlsRef = useRef();
   const modelRef = useRef();
-  const modelPath = './artgallery.glb';
+  const modelPath = useLoader(GLTFLoader, './artgallery.glb');
 
   useEffect(() => {
     const scene = new THREE.Scene();
