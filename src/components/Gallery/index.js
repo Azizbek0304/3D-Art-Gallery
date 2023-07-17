@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Canvas } from '@react-three/fiber';
 import './gallery.css';
 import Artwork from '../Artwork';
 import InfoPanel from '../InfoPanel';
@@ -43,7 +44,9 @@ const Gallery = () => {
   return (
     <div className="gallery-container">
       <h2>Gallery</h2>
-      <VirtualGallery />
+      <Canvas>
+        <VirtualGallery />
+      </Canvas>
       <div className="artwork-list">
         {artworks.map((artwork) => (
           <Artwork
