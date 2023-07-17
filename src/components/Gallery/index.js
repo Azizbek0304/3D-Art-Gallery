@@ -44,9 +44,9 @@ const Gallery = () => {
   return (
     <div className="gallery-container">
       <h2>Gallery</h2>
-      <Canvas>
+      {/* <Canvas>
         <VirtualGallery />
-      </Canvas>
+      </Canvas> */}
       <div className="artwork-list">
         {artworks.map((artwork) => (
           <Artwork
