@@ -1,15 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import './virtualGallery.css'; // Replace with the path to your .glTF model file
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { OrbitControls } from '@react-three/drei';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { Stats } from '@react-three/drei';
 
 const VirtualGallery = () => {
   const sceneRef = useRef();
   const rendererRef = useRef();
   const controlsRef = useRef();
   const modelRef = useRef();
-  const modelPath = await loader.loadAsync('./artgallery.glb');
+  const modelPath = './artgallery.glb';
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -62,7 +63,14 @@ const VirtualGallery = () => {
     };
   }, []);
 
-  return <div ref={sceneRef} />;
+  return (
+    <Canvas>
+      <Stats />
+      <primitive object={modelRef.current} />
+      <OrbitControls />
+      <axesHelper args={[5]} />
+    </Canvas>
+  );
 };
 
 export default VirtualGallery;
