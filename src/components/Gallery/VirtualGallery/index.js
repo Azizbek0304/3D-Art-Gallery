@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import './virtualGallery.css';
-import modelPath from './artgallery.glb'; // Replace with the path to your .glTF model file
+import './virtualGallery.css'; // Replace with the path to your .glTF model file
 
 const VirtualGallery = () => {
   const sceneRef = useRef();
   const rendererRef = useRef();
   const controlsRef = useRef();
   const modelRef = useRef();
+  const modelPath = await loader.loadAsync('./artgallery.glb');
 
   useEffect(() => {
     const scene = new THREE.Scene();
