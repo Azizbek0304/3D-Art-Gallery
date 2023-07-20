@@ -4,10 +4,11 @@ import './gallery.css'; // Import your CSS file for styling
 
 const Gallery = () => {
   const artworks = [
-    { id: 1, name: 'Artwork 1', url: '/path/to/artwork1.glb' },
-    { id: 2, name: 'Artwork 2', url: '/path/to/artwork2.glb' },
+    { id: 1, name: 'Artwork 1', url: './public/Model/artgallery.glb' },
+    { id: 2, name: 'Artwork 2', url: './public/Model/artgallery.glb' },
     // Add more artworks here as needed
   ];
+  console.log(artworks);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
 
   const handleArtworkClick = (artwork) => {
