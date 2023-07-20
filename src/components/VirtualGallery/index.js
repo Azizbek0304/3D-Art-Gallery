@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Artwork from './ArtWork';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -9,6 +9,7 @@ import Loading from './Loading';
 const VirtualGallery = ({ artworks, activeExhibition, onArtworkClick }) => {
   const canvasRef = useRef(null);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     // Simulate loading time for 3 seconds (you can replace this with actual data fetching or loading)
     const timer = setTimeout(() => {
@@ -69,29 +70,40 @@ const VirtualGallery = ({ artworks, activeExhibition, onArtworkClick }) => {
 
     window.addEventListener('resize', handleResize);
 
+    // Set up animation loop for rendering the scene
+    const animate = () => {
+      requestAnimationFrame(animate);
+      // Add any animations or updates to the scene here
+
+      renderer.render(scene, camera);
+    };
+
+    // Start the animation loop
+    animate();
+
     // Clean up Three.js resources when the component unmounts
     return () => {
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
+      scene.dispose();
     };
   }, [artworks, onArtworkClick]);
-
-  // Animation loop for rendering the scene
-  const animate = () => {
-    requestAnimationFrame(animate);
-    // Add any animations or updates to the scene here
-  };
-
-  useEffect(() => {
-    animate();
-  }, []);
 
   return (
     <div ref={canvasRef}>
       {loading ? (
         <Loading />
       ) : (
-        <div>
+        <Canvas>
+          <OrbitControls
+            enablePan
+            enableZoom
+            enableRotate
+            maxPolarAngle={Math.PI / 2}
+            minPolarAngle={Math.PI / 3}
+          />
+          <OrbitControls />
+          {/* Render the 3D scene and artworks */}
           {artworks.map((artwork) => (
             <Artwork
               key={artwork.id}
@@ -100,7 +112,7 @@ const VirtualGallery = ({ artworks, activeExhibition, onArtworkClick }) => {
               imageUrl={artwork.imageUrl}
             />
           ))}
-        </div>
+        </Canvas>
       )}
     </div>
   );
