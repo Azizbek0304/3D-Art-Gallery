@@ -1,8 +1,24 @@
 import React, { useState } from 'react';
 import VirtualGallery from '../../components/VirtualGallery';
+import Navigation from './Navigation';
 import './gallery.css'; // Import your CSS file for styling
 
 const Gallery = () => {
+  // Sample exhibitions data with id and name
+  const exhibitions = [
+    { id: 1, name: 'Exhibition 1' },
+    { id: 2, name: 'Exhibition 2' },
+    // Add more exhibitions here as needed
+  ];
+
+  // State to keep track of the active exhibition
+  const [activeExhibition, setActiveExhibition] = useState(exhibitions[0].id);
+
+  // Handler function to update the active exhibition
+  const handleExhibitionChange = (exhibitionId) => {
+    setActiveExhibition(exhibitionId);
+    // You can add additional logic here, like fetching new artworks based on the selected exhibition.
+  };
   const artworks = [
     { id: 1, name: 'Artwork 1', url: './public/Model/artgallery.glb' },
     { id: 2, name: 'Artwork 2', url: './public/Model/artgallery.glb' },
@@ -19,14 +35,12 @@ const Gallery = () => {
 
   return (
     <div className="app">
-      <h1>Welcome to the 3D Gallery!</h1>
-      {/* <VirtualGallery artworks={artworks} onArtworkClick={handleArtworkClick} /> */}
-      {selectedArtwork && (
-        <div>
-          <h2>Selected Artwork:</h2>
-          <p>{selectedArtwork.name}</p>
-        </div>
-      )}
+      <Navigation
+        exhibitions={exhibitions}
+        activeExhibition={activeExhibition}
+        onExhibitionChange={handleExhibitionChange}
+      />
+      {/* <VirtualGallery activeExhibition={activeExhibition} /> */}
     </div>
   );
 };
