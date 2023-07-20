@@ -19,7 +19,7 @@ const Gallery = () => {
   return (
     <div className="app">
       <h1>Welcome to the 3D Gallery!</h1>
-      <Gallery artworks={artworks} onArtworkClick={handleArtworkClick} />
+      <VirtualGallery artworks={artworks} onArtworkClick={handleArtworkClick} />
       {selectedArtwork && (
         <div>
           <h2>Selected Artwork:</h2>
@@ -28,7 +28,6 @@ const Gallery = () => {
       )}
     </div>
   );
-};
 };
 
 export default Gallery;
