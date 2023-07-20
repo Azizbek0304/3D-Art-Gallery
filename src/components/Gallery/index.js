@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import VirtualGallery from '../../components/VirtualGallery';
-import Navigation from './Navigation';
-import './gallery.css'; // Import your CSS file for styling
+import React from 'react';
+import GalleryLayout from './GalleryLayout';
 
 const Gallery = () => {
   // Sample exhibitions data with id and name
@@ -11,36 +9,26 @@ const Gallery = () => {
     // Add more exhibitions here as needed
   ];
 
-  // State to keep track of the active exhibition
-  const [activeExhibition, setActiveExhibition] = useState(exhibitions[0].id);
-
-  // Handler function to update the active exhibition
-  const handleExhibitionChange = (exhibitionId) => {
-    setActiveExhibition(exhibitionId);
-    // You can add additional logic here, like fetching new artworks based on the selected exhibition.
-  };
+  // Sample artworks data with id, name, and description
   const artworks = [
-    { id: 1, name: 'Artwork 1', url: './public/Model/artgallery.glb' },
-    { id: 2, name: 'Artwork 2', url: './public/Model/artgallery.glb' },
+    {
+      id: 1,
+      name: 'Artwork 1',
+      description: 'Description of Artwork 1',
+      imageUrl: '/path/to/artwork1.jpg',
+    },
+    {
+      id: 2,
+      name: 'Artwork 2',
+      description: 'Description of Artwork 2',
+      imageUrl: '/path/to/artwork2.jpg',
+    },
     // Add more artworks here as needed
   ];
-  console.log(artworks);
-  const [selectedArtwork, setSelectedArtwork] = useState(null);
-
-  const handleArtworkClick = (artwork) => {
-    // Implement your artwork selection logic here
-    setSelectedArtwork(artwork);
-    console.log(`Selected artwork: ${artwork.name}`);
-  };
 
   return (
     <div className="app">
-      <Navigation
-        exhibitions={exhibitions}
-        activeExhibition={activeExhibition}
-        onExhibitionChange={handleExhibitionChange}
-      />
-      {/* <VirtualGallery activeExhibition={activeExhibition} /> */}
+      <GalleryLayout exhibitions={exhibitions} artworks={artworks} />
     </div>
   );
 };
