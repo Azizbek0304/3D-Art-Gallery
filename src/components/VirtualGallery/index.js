@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import Artwork from './ArtWork';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -9,8 +10,7 @@ const VirtualGallery = ({ artworks, onArtworkClick }) => {
 
   useEffect(() => {
     // Set up Three.js scene when the component mounts
-
-    // Camera configuration
+    const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -20,21 +20,27 @@ const VirtualGallery = ({ artworks, onArtworkClick }) => {
     camera.position.set(0, 2, 5);
     camera.lookAt(0, 0, 0);
 
-    // Renderer setup
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     canvasRef.current.appendChild(renderer.domElement);
 
-    // Load 3D models and add them to the scene
-    const scene = new THREE.Scene();
-    const loader = new GLTFLoader();
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    const spotLight = new THREE.SpotLight(0xffffff, 1);
+    spotLight.position.set(10, 10, 10);
+    spotLight.angle = 0.15;
+    spotLight.penumbra = 1;
+    spotLight.castShadow = true;
+    scene.add(spotLight);
 
     artworks.forEach((artwork) => {
+      const loader = new GLTFLoader();
       loader.load(artwork.url, (gltf) => {
         const model = gltf.scene;
-        model.scale.set(0.1, 0.1, 0.1); // Adjust scale as needed
-        model.position.set(0, 0, 0); // Adjust position as needed
+        model.scale.set(0.1, 0.1, 0.1);
+        model.position.set(0, 0, 0);
         scene.add(model);
 
         // Add click event listener to the model to handle artwork selection
@@ -70,7 +76,18 @@ const VirtualGallery = ({ artworks, onArtworkClick }) => {
     animate();
   }, []);
 
-  return <div ref={canvasRef} />;
+  return (
+    <div ref={canvasRef}>
+      {artworks.map((artwork) => (
+        <Artwork
+          key={artwork.id}
+          name={artwork.name}
+          description={artwork.description}
+          imageUrl={artwork.imageUrl}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default VirtualGallery;
