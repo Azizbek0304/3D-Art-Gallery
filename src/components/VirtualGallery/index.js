@@ -4,9 +4,19 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import Loading from './Loading';
 
-const VirtualGallery = ({ artworks, onArtworkClick }) => {
+const VirtualGallery = ({ artworks, activeExhibition, onArtworkClick }) => {
   const canvasRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    // Simulate loading time for 3 seconds (you can replace this with actual data fetching or loading)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     // Set up Three.js scene when the component mounts
@@ -78,14 +88,20 @@ const VirtualGallery = ({ artworks, onArtworkClick }) => {
 
   return (
     <div ref={canvasRef}>
-      {artworks.map((artwork) => (
-        <Artwork
-          key={artwork.id}
-          name={artwork.name}
-          description={artwork.description}
-          imageUrl={artwork.imageUrl}
-        />
-      ))}
+      {loading ? (
+        <Loading />
+      ) : (
+        <div>
+          {artworks.map((artwork) => (
+            <Artwork
+              key={artwork.id}
+              name={artwork.name}
+              description={artwork.description}
+              imageUrl={artwork.imageUrl}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
