@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@react-three/": "*",
-    "@react-three/fiber": "8.13.5",
+    "@react-three/fiber": "8.13.6",
     "expo": "49.0.3",
     "expo-asset": "8.10.1",
     "expo-gl": "13.0.1",
