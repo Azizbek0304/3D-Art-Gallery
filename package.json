@@ -7,7 +7,7 @@
     "@react-three/": "*",
     "@react-three/fiber": "8.13.5",
     "expo": "49.0.3",
-    "expo-asset": "8.10.1",
+    "expo-asset": "8.11.0",
     "expo-gl": "13.0.1",
     "gltf-pipeline": "4.1.0",
     "node": "^20.4.0",
