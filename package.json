@@ -6,7 +6,7 @@
   "dependencies": {
     "@react-three/": "*",
     "@react-three/fiber": "8.13.5",
-    "expo": "49.0.3",
+    "expo": "50.0.0",
     "expo-asset": "8.10.1",
     "expo-gl": "13.0.1",
     "gltf-pipeline": "4.1.0",
